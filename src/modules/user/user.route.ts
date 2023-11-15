@@ -11,5 +11,7 @@ const route = Router()
 export const userRoutes = [
     route.post(prefix, (req, res)=> userService.create(req, res)),
     route.get(prefix, (req, res)=> userService.getAll(req, res)),
+    route.get(prefix+ '/:id', (req, res)=> userService.findOne(req, res)),
+    route.patch(prefix+ '/:id', (req, res)=> userService.update(req, res)),
     route.delete(prefix+ '/:id', (req, res)=> userService.delete(req, res))
 ]

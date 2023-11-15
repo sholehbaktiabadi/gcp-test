@@ -16,6 +16,30 @@ export class UserService{
         }
     }
 
+    async findOne(req: Request, res: Response){
+        try {
+            const id: string = req.params.id
+            const data = await this.userRepository.findOne(id)
+            return ResOK(res, data)
+        } catch (error) {
+            return ResErr(res, 500, error)
+        }
+    }
+
+    async update(req: Request, res: Response){
+        try {
+            const id: string = req.params.id
+            const selected = await this.userRepository.findOne(id)
+            if(!selected) return ResErr(res, 400, 'data not found')
+            const body: User = req.body
+            const newData = {...selected, ...body}
+            const update = await this.userRepository.update(id, newData)
+            return ResOK(res, update)
+        } catch (error) {
+            return ResErr(res, 500, error)
+        }
+    }
+
     async delete(req: Request, res: Response){
         try {
             const id: string = req.params.id
